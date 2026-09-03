@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>LazyMeow Audio</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #fff7fb;
+    }
+
+    .lazymeow-search {
+      width: 90%;
+      max-width: 900px;
+      margin: 80px auto;
+    }
+
+    .search-title {
+      text-align: center;
+      color: #f04f91;
+      font-size: 30px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .cat-search-box {
+      position: relative;
+      padding: 8px;
+      border-radius: 35px;
+      background: linear-gradient(135deg, #ff9bc4, #ffc1db);
+      border: 2px solid #f45b9b;
+      box-shadow: 0 8px 20px rgba(240, 79, 145, 0.2);
+    }
+
+    .cat-ear {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background: #ff9fc7;
+      border: 2px solid #f45b9b;
+      top: -30px;
+      transform: rotate(45deg);
+      border-radius: 8px 40px 8px 40px;
+      z-index: -1;
+    }
+
+    .cat-ear-left {
+      left: 30px;
+    }
+
+    .cat-ear-right {
+      right: 30px;
+    }
+
+    .search-inner {
+      display: flex;
+      align-items: center;
+      background: white;
+      border-radius: 28px;
+      padding: 8px 10px 8px 20px;
+    }
+
+    #searchInput {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 17px;
+      padding: 14px;
+      background: transparent;
+    }
+
+    .cat-search-button {
+      width: 95px;
+      height: 55px;
+      border: none;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #ff7eb5, #f04f91);
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    #searchResults {
+      margin-top: 25px;
+    }
+
+    .story-result {
+      background: white;
+      border: 1px solid #ffd2e4;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 12px rgba(240,79,145,.08);
+    }
+
+    .story-title {
+      color: #e83580;
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .story-info {
+      color: #777;
+      font-size: 14px;
+    }
+
+    .watch-button {
+      display: inline-block;
+      margin-top: 12px;
+      text-decoration: none;
+      background: #f04f91;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="lazymeow-search">
+
+    <div class="search-title">
+      💕 Tìm truyện yêu thích 💕
+    </div>
+
+    <div class="cat-search-box">
+
+      <div class="cat-ear cat-ear-left"></div>
+      <div class="cat-ear cat-ear-right"></div>
+
+      <div class="search-inner">
+
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Nhập tên truyện, thể loại hoặc chương..."
+        >
+
+        <button
+          class="cat-search-button"
+          onclick="searchStory()"
+        >
+          🐾
+        </button>
+
+      </div>
+
+    </div>
+
+    <div id="searchResults"></div>
+
+  </div>
+
+
+  <script>
+
+    /* ============================
+       ĐIỀN TRUYỆN Ở ĐÂY
+    ============================ */
+
+    const stories = [
+
+      {
+        title: "Rương Kiamat: Ta cùng mèo nhỏ tích trữ vật tư",
+        genre: "Mạt thế • Hệ thống • Tích trữ",
+        chapter: "Chapter 1 - 50",
+        url: "#"
+      },
+
+      {
+        title: "Xuyên không làm pháo hôi, ta dựa mỹ thực đi lên đỉnh cao",
+        genre: "Xuyên không • Mỹ thực • Cổ đại",
+        chapter: "Chapter 1 - 70",
+        url: "#"
+      }
+
+    ];
+
+
+    function searchStory() {
+
+      const keyword =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+      const box =
+        document.getElementById("searchResults");
+
+      if (!keyword) {
+        box.innerHTML =
+          "<p style='text-align:center;color:#f04f91;'>🐱 Hãy nhập tên truyện nhé!</p>";
+        return;
+      }
+
+      const results = stories.filter(story =>
+        story.title.toLowerCase().includes(keyword) ||
+        story.genre.toLowerCase().includes(keyword) ||
+        story.chapter.toLowerCase().includes(keyword)
+      );
+
+      if (results.length === 0) {
+        box.innerHTML =
+          "<p style='text-align:center;color:#f04f91;'>😿 Không tìm thấy truyện.</p>";
+        return;
+      }
+
+      box.innerHTML = results.map(story => `
+
+        <div class="story-result">
+
+          <div class="story-title">
+            🐱 ${story.title}
+          </div>
+
+          <div class="story-info">
+            ${story.genre}<br><br>
+            📖 ${story.chapter}
+          </div>
+
+          <a
+            class="watch-button"
+            href="${story.url}"
+            target="_blank"
+          >
+            🐾 Xem ngay
+          </a>
+
+        </div>
+
+      `).join("");
+
+    }
+
+
+    document
+      .getElementById("searchInput")
+      .addEventListener("keydown", function(event) {
+
+        if (event.key === "Enter") {
+          searchStory();
+        }
+
+      });
+
+  </script>
+
+</body>
+</html>
