@@ -198,6 +198,7 @@ a{color:inherit;text-decoration:none} img{max-width:100%}
 .youtube-item:hover{
     transform:scale(1.02);
 }
+  
 </style>
 </head>
 <body>
@@ -209,10 +210,43 @@ a{color:inherit;text-decoration:none} img{max-width:100%}
     <img src="logo-tieude2.png" alt="Lazy Meow Audio" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
   </a>
   <nav class="cloud-nav">
+    
+<!-- CHUYỂN NGÔN NGỮ -->
+<div class="language-menu">
 
+    <button
+        class="cloud-button language-toggle"
+        type="button"
+        onclick="toggleLanguageMenu(event)"
+    >
+        🌐 <span id="currentLang">VI</span> ▼
+    </button>
+
+    <div class="language-popup" id="languagePopup">
+
+        <button type="button" onclick="changeLanguage('vi')">
+            🇻🇳 Tiếng Việt
+        </button>
+
+        <button type="button" onclick="changeLanguage('ms')">
+            🇲🇾 Bahasa Melayu
+        </button>
+
+        <button type="button" onclick="changeLanguage('id')">
+            🇮🇩 Bahasa Indonesia
+        </button>
+
+        <button type="button" onclick="changeLanguage('en')">
+            🇺🇸 English
+        </button>
+
+    </div>
+
+</div>
+    
     <!-- THỂ LOẠI -->
     <a class="cloud-button" href="the-loai.html">
-        🐾 THỂ LOẠI
+        🐾 <span data-i18n="navGenres">THỂ LOẠI</span>
     </a>
 
 
@@ -224,7 +258,7 @@ a{color:inherit;text-decoration:none} img{max-width:100%}
             type="button"
             onclick="toggleYoutubePopup(event)"
         >
-            ▶️ KÊNH YOUTUBE
+          ▶️ <span data-i18n="navYoutube">KÊNH YOUTUBE</span>
         </button>
 
         <div class="youtube-popup" id="youtubePopup">
@@ -297,41 +331,38 @@ a{color:inherit;text-decoration:none} img{max-width:100%}
 <section class="hero">
   <div class="hero-circle"><img src="logo-meow.png" alt="Lazy Meow Audio"></div>
   <div class="hero-content">
-    <h1 class="hero-title">Thả Lỏng Với<br><strong>LAZY MEOW<br>AUDIO</strong></h1>
-    <div class="search-heading">💗 Tìm truyện yêu thích 💗</div>
+   <h1 class="hero-title"><span data-i18n="heroRelax">Thả Lỏng Với</span><br><strong>LAZY MEOW<br>AUDIO</strong></h1>
+    <div class="search-heading">💗 <span data-i18n="searchTitle">Tìm truyện yêu thích</span> 💗</div>
     <div class="cat-search">
-      <input id="searchInput" type="text" placeholder="Nhập tên truyện, thể loại hoặc chương...">
+     <input id="searchInput" type="text" data-i18n-placeholder="searchPlaceholder" placeholder="Nhập tên truyện, thể loại hoặc chương...">
       <button onclick="searchStory()" aria-label="Tìm kiếm">🐾</button>
     </div>
     <div id="searchResults"></div>
-    <p class="hero-note">Nghe truyện audio thư giãn, có mục tìm kiếm dễ dàng và đa ngôn ngữ.</p>
+    <p class="hero-note" data-i18n="heroNote"> Nghe truyện audio thư giãn, có mục tìm kiếm dễ dàng và đa ngôn ngữ. </p>
   </div>
 </section>
 <section class="about-panel" id="about">
   <div>
-    <h2>🐾 Về Lazy Meow Audio</h2>
-    <p>Lazy Meow Audio là kênh truyện âm thanh chuyên biệt mang đến những câu chuyện dịch từ nhiều thể loại khác nhau. Mỗi truyện được dẫn dắt bởi những ngòi bút khác nhau giúp bạn thoát khỏi stress hằng ngày và tìm lại bình yên. Chúng tôi cung cấp thư viện truyện đa dạng với nhiều thể loại khác nhau, luôn được cập nhật liên tục.</p>
+    <h2> 🐾 <span data-i18n="aboutTitle">Về Lazy Meow Audio</span></h2>
+    <p data-i18n="aboutText"> Lazy Meow Audio là kênh truyện âm thanh chuyên biệt mang đến những câu chuyện dịch từ nhiều thể loại khác nhau. Mỗi truyện được dẫn dắt bởi những ngòi bút khác nhau giúp bạn thoát khỏi stress hằng ngày và tìm lại bình yên. Chúng tôi cung cấp thư viện truyện đa dạng với nhiều thể loại khác nhau, luôn được cập nhật liên tục. </p>
   </div>
   <div class="about-image"><img src="vechungtoi-logo.png" alt="Lazy Meow Audio"></div>
 </section>
-<section class="content-grid">
-  <aside class="genre-panel" id="genres">
-    <h2>🐾 Danh Mục Thể Loại Truyện 🐾</h2>
-    <div class="genre-list">
-      <a class="genre-link" href="the-loai/mat-the.html">🐾 Mạt Thế / Zombie / Sinh Tồn</a>
-      <a class="genre-link" href="the-loai/xuyen-khong.html">🐾 Xuyên Không / Trọng Sinh</a>
-      <a class="genre-link" href="the-loai/ngon-tinh.html">🐾 Ngôn Tình</a>
-      <a class="genre-link" href="the-loai/kinh-di.html">🐾 Kinh Dị / Linh Dị</a>
-      <a class="genre-link" href="the-loai/huyen-huyen.html">🐾 Huyền Huyễn / Tu Tiên / Thú Thế</a>
-      <a class="genre-link" href="the-loai/tien-hiep.html">🐾 Ngự Thú / Tiên Hiệp / Kiếm Hiệp / Võ Hiệp</a>
-      <a class="genre-link" href="the-loai/do-thi.html">🐾 Đô Thị / Hiện Đại / Cổ Đại</a>
-      <a class="genre-link" href="the-loai/he-thong.html">🐾 Hệ Thống / Dị Năng / Không Gian</a>
-      <a class="genre-link" href="the-loai/game.html">🐾 Game / Vòng Lặp / Khoa Huyễn</a>
-      <a class="genre-link" href="the-loai/dien-van.html">🐾 Điền Văn / Làm Ruộng ...v.v</a>
-    </div>
+<div class="genre-list">
+ <a class="genre-link" href="the-loai/mat-the.html">🐾 <span data-i18n="genre1">Mạt Thế / Zombie / Sinh Tồn</span></a>
+ <a class="genre-link" href="the-loai/xuyen-khong.html">🐾 <span data-i18n="genre2">Xuyên Không / Trọng Sinh</span></a>
+ <a class="genre-link" href="the-loai/ngon-tinh.html">🐾 <span data-i18n="genre3">Ngôn Tình</span></a>
+ <a class="genre-link" href="the-loai/kinh-di.html">🐾 <span data-i18n="genre4">Kinh Dị / Linh Dị</span></a>
+ <a class="genre-link" href="the-loai/huyen-huyen.html">🐾 <span data-i18n="genre5">Huyền Huyễn / Tu Tiên / Thú Thế</span></a>
+ <a class="genre-link" href="the-loai/tien-hiep.html">🐾 <span data-i18n="genre6">Ngự Thú / Tiên Hiệp / Kiếm Hiệp / Võ Hiệp</span></a>
+ <a class="genre-link" href="the-loai/do-thi.html">🐾 <span data-i18n="genre7">Đô Thị / Hiện Đại / Cổ Đại</span></a>
+ <a class="genre-link" href="the-loai/he-thong.html">🐾 <span data-i18n="genre8">Hệ Thống / Dị Năng / Không Gian</span></a>
+ <a class="genre-link" href="the-loai/game.html">🐾 <span data-i18n="genre9">Game / Vòng Lặp / Khoa Huyễn</span></a>
+ <a class="genre-link" href="the-loai/dien-van.html">🐾 <span data-i18n="genre10">Điền Văn / Làm Ruộng ...v.v</span></a>
+</div>
   </aside>
   <section class="channel-panel" id="channels">
-    <h2>🐾 KÊNH YOUTUBE 🐾</h2>
+    <h2>🐾 <span data-i18n="youtubeTitle">KÊNH YOUTUBE</span> 🐾</h2>
     <div class="channel-grid">
       <article class="channel-card">
         <div class="channel-circle"><img src="ytb-my.png" alt="Lazy Meow Audio MY"></div>
@@ -353,10 +384,10 @@ a{color:inherit;text-decoration:none} img{max-width:100%}
 </section>
 <footer class="footer">
   <div class="footer-links">
-    <a class="footer-link" href="about.html">🐾 Về Chúng Tôi</a>
-    <a class="footer-link" href="privacy.html">🐾 Chính Sách Bảo Mật</a>
-    <a class="footer-link" href="terms.html">🐾 Điều Khoản Sử Dụng</a>
-    <a class="footer-link" href="contact.html">🐾 Liên Hệ</a>
+    <a class="footer-link" href="about.html">🐾 <span data-i18n="footerAbout">Về Chúng Tôi</span></a>
+    <a class="footer-link" href="privacy.html">🐾 <span data-i18n="footerPrivacy">Chính Sách Bảo Mật</span></a>
+    <a class="footer-link" href="terms.html">🐾 <span data-i18n="footerTerms">Điều Khoản Sử Dụng</span></a>
+    <a class="footer-link" href="contact.html">🐾 <span data-i18n="footerContact">Liên Hệ</span></a>
   </div>
   <div class="copyright">© 2026 Lazy Meow Audio. All rights reserved. 🐾</div>
 </footer>
@@ -370,9 +401,9 @@ const stories=[
 function normalizeText(text){return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d")}
 function searchStory(){
   const input=document.getElementById("searchInput"),box=document.getElementById("searchResults"),keyword=normalizeText(input.value.trim());
-  if(!keyword){box.innerHTML='<div class="search-result">🐱 Hãy nhập tên truyện, thể loại hoặc chương nhé!</div>';return}
+  if(!keyword){box.innerHTML ='<div class="search-result">' +translations[currentLanguage].searchEmpty +'</div>';return;}
   const results=stories.filter(story=>normalizeText(story.title+" "+story.genre+" "+story.language+" "+story.chapter).includes(keyword));
-  if(results.length===0){box.innerHTML='<div class="search-result">😿 Không tìm thấy truyện phù hợp.</div>';return}
+  if(results.length===0){box.innerHTML ='<div class="search-result">' +translations[currentLanguage].searchNone +'</div>';return;}
   box.innerHTML=results.map(story=>`<div class="search-result"><div class="search-result-title">🐾 ${story.title}</div><div class="search-result-meta">${story.genre}<br>🌐 ${story.language} &nbsp; • &nbsp; 📖 ${story.chapter}</div><div class="result-links"><a class="mini-link" href="${story.youtube}" target="_blank">▶️ YouTube</a><a class="mini-link" href="${story.telegram}" target="_blank">✈️ Telegram</a></div></div>`).join("");
 }
 document.getElementById("searchInput").addEventListener("keydown",e=>{if(e.key==="Enter")searchStory()});  
@@ -402,6 +433,329 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+  /* =========================================
+   CHUYỂN ĐỔI NGÔN NGỮ
+========================================= */
+
+const translations = {
+
+    /* ===== TIẾNG VIỆT ===== */
+
+    vi: {
+
+        navGenres: "THỂ LOẠI",
+        navYoutube: "KÊNH YOUTUBE",
+
+        heroRelax: "Thả Lỏng Với",
+
+        searchTitle: "Tìm truyện yêu thích",
+
+        searchPlaceholder:
+            "Nhập tên truyện, thể loại hoặc chương...",
+
+        heroNote:
+            "Nghe truyện audio thư giãn, có mục tìm kiếm dễ dàng và đa ngôn ngữ.",
+
+        aboutTitle:
+            "Về Lazy Meow Audio",
+
+        aboutText:
+            "Lazy Meow Audio là kênh truyện âm thanh chuyên biệt mang đến những câu chuyện dịch từ nhiều thể loại khác nhau. Mỗi truyện được dẫn dắt bởi những ngòi bút khác nhau giúp bạn thoát khỏi stress hằng ngày và tìm lại bình yên. Chúng tôi cung cấp thư viện truyện đa dạng với nhiều thể loại khác nhau, luôn được cập nhật liên tục.",
+
+        genreTitle:
+            "Danh Mục Thể Loại Truyện",
+
+        genre1:
+            "Mạt Thế / Zombie / Sinh Tồn",
+
+        genre2:
+            "Xuyên Không / Trọng Sinh",
+
+        genre3:
+            "Ngôn Tình",
+
+        genre4:
+            "Kinh Dị / Linh Dị",
+
+        genre5:
+            "Huyền Huyễn / Tu Tiên / Thú Thế",
+
+        genre6:
+            "Ngự Thú / Tiên Hiệp / Kiếm Hiệp / Võ Hiệp",
+
+        genre7:
+            "Đô Thị / Hiện Đại / Cổ Đại",
+
+        genre8:
+            "Hệ Thống / Dị Năng / Không Gian",
+
+        genre9:
+            "Game / Vòng Lặp / Khoa Huyễn",
+
+        genre10:
+            "Điền Văn / Làm Ruộng ...v.v",
+
+        youtubeTitle:
+            "KÊNH YOUTUBE",
+
+        footerAbout:
+            "Về Chúng Tôi",
+
+        footerPrivacy:
+            "Chính Sách Bảo Mật",
+
+        footerTerms:
+            "Điều Khoản Sử Dụng",
+
+        footerContact:
+            "Liên Hệ",
+
+        searchEmpty:
+            "🐱 Hãy nhập tên truyện, thể loại hoặc chương nhé!",
+
+        searchNone:
+            "😿 Không tìm thấy truyện phù hợp."
+    },
+
+
+    /* ===== BAHASA MELAYU ===== */
+
+    ms: {
+
+        navGenres: "GENRE",
+        navYoutube: "SALURAN YOUTUBE",
+
+        heroRelax: "Bersantai Bersama",
+
+        searchTitle: "Cari cerita kegemaran",
+
+        searchPlaceholder:
+            "Masukkan tajuk cerita, genre atau bab...",
+
+        heroNote:
+            "Nikmati cerita audio yang santai dengan carian mudah dan sokongan pelbagai bahasa.",
+
+        aboutTitle:
+            "Tentang Lazy Meow Audio",
+
+        aboutText:
+            "Lazy Meow Audio ialah saluran cerita audio yang membawakan pelbagai kisah terjemahan daripada pelbagai genre. Setiap cerita menawarkan gaya penceritaan yang berbeza untuk membantu anda berehat daripada tekanan harian dan menikmati masa yang lebih tenang. Kami menyediakan perpustakaan cerita yang pelbagai dan sentiasa dikemas kini.",
+
+        genreTitle:
+            "Kategori Genre Cerita",
+
+        genre1:
+            "Kiamat / Zombi / Survival",
+
+        genre2:
+            "Merentas Dunia / Kelahiran Semula",
+
+        genre3:
+            "Romantik",
+
+        genre4:
+            "Seram / Paranormal",
+
+        genre5:
+            "Fantasi / Kultivasi / Dunia Binatang",
+
+        genre6:
+            "Penjinakan Binatang / Xianxia / Pendekar Pedang / Wuxia",
+
+        genre7:
+            "Urban / Moden / Zaman Purba",
+
+        genre8:
+            "Sistem / Kuasa Istimewa / Ruang Dimensi",
+
+        genre9:
+            "Permainan / Gelung Masa / Fiksyen Sains",
+
+        genre10:
+            "Kehidupan Desa / Pertanian dan lain-lain",
+
+        youtubeTitle:
+            "SALURAN YOUTUBE",
+
+        footerAbout:
+            "Tentang Kami",
+
+        footerPrivacy:
+            "Dasar Privasi",
+
+        footerTerms:
+            "Terma Penggunaan",
+
+        footerContact:
+            "Hubungi Kami",
+
+        searchEmpty:
+            "🐱 Sila masukkan tajuk cerita, genre atau bab!",
+
+        searchNone:
+            "😿 Tiada cerita yang sepadan ditemui."
+    },
+
+
+    /* ===== BAHASA INDONESIA ===== */
+
+    id: {
+
+        navGenres: "GENRE",
+        navYoutube: "KANAL YOUTUBE",
+
+        heroRelax: "Bersantai Bersama",
+
+        searchTitle: "Cari cerita favorit",
+
+        searchPlaceholder:
+            "Masukkan judul cerita, genre, atau bab...",
+
+        heroNote:
+            "Nikmati cerita audio santai dengan fitur pencarian yang mudah dan dukungan berbagai bahasa.",
+
+        aboutTitle:
+            "Tentang Lazy Meow Audio",
+
+        aboutText:
+            "Lazy Meow Audio adalah kanal cerita audio yang menghadirkan berbagai cerita terjemahan dari beragam genre. Setiap cerita memiliki gaya penceritaan yang berbeda untuk membantu Anda beristirahat dari tekanan sehari-hari dan menikmati waktu yang lebih tenang. Kami menyediakan perpustakaan cerita yang beragam dan terus diperbarui.",
+
+        genreTitle:
+            "Kategori Genre Cerita",
+
+        genre1:
+            "Kiamat / Zombie / Bertahan Hidup",
+
+        genre2:
+            "Transmigrasi / Reinkarnasi",
+
+        genre3:
+            "Romansa",
+
+        genre4:
+            "Horor / Supranatural",
+
+        genre5:
+            "Fantasi / Kultivasi / Dunia Binatang",
+
+        genre6:
+            "Penjinakan Binatang / Xianxia / Pendekar Pedang / Wuxia",
+
+        genre7:
+            "Perkotaan / Modern / Zaman Kuno",
+
+        genre8:
+            "Sistem / Kemampuan Khusus / Ruang Dimensi",
+
+        genre9:
+            "Game / Perulangan / Fiksi Ilmiah",
+
+        genre10:
+            "Kehidupan Pedesaan / Bertani dan lain-lain",
+
+        youtubeTitle:
+            "KANAL YOUTUBE",
+
+        footerAbout:
+            "Tentang Kami",
+
+        footerPrivacy:
+            "Kebijakan Privasi",
+
+        footerTerms:
+            "Ketentuan Penggunaan",
+
+        footerContact:
+            "Hubungi Kami",
+
+        searchEmpty:
+            "🐱 Masukkan judul cerita, genre, atau bab!",
+
+        searchNone:
+            "😿 Tidak ditemukan cerita yang sesuai."
+    },
+
+
+    /* ===== ENGLISH ===== */
+
+    en: {
+
+        navGenres: "GENRES",
+        navYoutube: "YOUTUBE CHANNELS",
+
+        heroRelax: "Relax With",
+
+        searchTitle: "Find your favorite story",
+
+        searchPlaceholder:
+            "Enter a story title, genre, or chapter...",
+
+        heroNote:
+            "Enjoy relaxing audio stories with easy search and multilingual support.",
+
+        aboutTitle:
+            "About Lazy Meow Audio",
+
+        aboutText:
+            "Lazy Meow Audio is an audio story channel featuring translated stories across a wide range of genres. Each story offers a different storytelling style to help you unwind from daily stress and enjoy a more peaceful moment. Our diverse story library is continuously updated.",
+
+        genreTitle:
+            "Story Genres",
+
+        genre1:
+            "Apocalypse / Zombie / Survival",
+
+        genre2:
+            "Transmigration / Rebirth",
+
+        genre3:
+            "Romance",
+
+        genre4:
+            "Horror / Supernatural",
+
+        genre5:
+            "Fantasy / Cultivation / Beast World",
+
+        genre6:
+            "Beast Taming / Xianxia / Swordplay / Wuxia",
+
+        genre7:
+            "Urban / Modern / Ancient",
+
+        genre8:
+            "System / Superpowers / Spatial Dimension",
+
+        genre9:
+            "Game / Time Loop / Science Fiction",
+
+        genre10:
+            "Slice of Life / Farming and More",
+
+        youtubeTitle:
+            "YOUTUBE CHANNELS",
+
+        footerAbout:
+            "About Us",
+
+        footerPrivacy:
+            "Privacy Policy",
+
+        footerTerms:
+            "Terms of Use",
+
+        footerContact:
+            "Contact",
+
+        searchEmpty:
+            "🐱 Please enter a story title, genre, or chapter!",
+
+        searchNone:
+            "😿 No matching stories were found."
+    }
+
+};
+  
 </script>
   
 </body>
