@@ -375,9 +375,7 @@ function searchStory(){
   if(results.length===0){box.innerHTML='<div class="search-result">😿 Không tìm thấy truyện phù hợp.</div>';return}
   box.innerHTML=results.map(story=>`<div class="search-result"><div class="search-result-title">🐾 ${story.title}</div><div class="search-result-meta">${story.genre}<br>🌐 ${story.language} &nbsp; • &nbsp; 📖 ${story.chapter}</div><div class="result-links"><a class="mini-link" href="${story.youtube}" target="_blank">▶️ YouTube</a><a class="mini-link" href="${story.telegram}" target="_blank">✈️ Telegram</a></div></div>`).join("");
 }
-document.getElementById("searchInput").addEventListener("keydown",e=>{if(e.key==="Enter")searchStory()});
-</script>
-  <script>
+document.getElementById("searchInput").addEventListener("keydown",e=>{if(e.key==="Enter")searchStory()});  
 function toggleYoutubePopup(event) {
     event.stopPropagation();
 
