@@ -1,254 +1,785 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>LazyMeow Audio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lazy Meow Audio</title>
 
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #fff7fb;
+    :root{
+      --pink:#ff5ca8;
+      --pink2:#ff8fc5;
+      --pink3:#ffd7ec;
+      --purple:#b8a4ff;
+      --purple2:#ece7ff;
+      --blue:#ccecff;
+      --ink:#24172b;
+      --white:#ffffff;
+      --shadow:0 12px 30px rgba(151,91,181,.18);
     }
 
-    .lazymeow-search {
-      width: 90%;
-      max-width: 900px;
-      margin: 80px auto;
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 10% 10%, #fff 0 4%, transparent 5%),
+        linear-gradient(180deg,#f4dcff 0%,#fff8fc 34%,#f3e8ff 100%);
+      overflow-x:hidden;
     }
 
-    .search-title {
-      text-align: center;
-      color: #f04f91;
-      font-size: 30px;
-      font-weight: bold;
-      margin-bottom: 30px;
+    a{text-decoration:none;color:inherit}
+
+    /* ===== CLOUD BACKGROUND ===== */
+    .cloud{
+      position:fixed;
+      z-index:-1;
+      opacity:.55;
+      filter:blur(.2px);
+      animation:floatCloud linear infinite;
+      pointer-events:none;
+      user-select:none;
+      font-size:90px;
     }
 
-    .cat-search-box {
-      position: relative;
-      padding: 8px;
-      border-radius: 35px;
-      background: linear-gradient(135deg, #ff9bc4, #ffc1db);
-      border: 2px solid #f45b9b;
-      box-shadow: 0 8px 20px rgba(240, 79, 145, 0.2);
+    .cloud.c1{top:90px;left:-140px;animation-duration:34s}
+    .cloud.c2{top:420px;left:-210px;animation-duration:46s;font-size:120px}
+    .cloud.c3{top:760px;left:-160px;animation-duration:39s;font-size:80px}
+    .cloud.c4{top:1040px;left:-240px;animation-duration:52s;font-size:130px}
+
+    @keyframes floatCloud{
+      from{transform:translateX(0)}
+      to{transform:translateX(calc(100vw + 380px))}
     }
 
-    .cat-ear {
-      position: absolute;
-      width: 50px;
-      height: 50px;
-      background: #ff9fc7;
-      border: 2px solid #f45b9b;
-      top: -30px;
-      transform: rotate(45deg);
-      border-radius: 8px 40px 8px 40px;
-      z-index: -1;
+    .sparkle{
+      position:fixed;
+      z-index:-1;
+      animation:twinkle 2.2s ease-in-out infinite alternate;
+      pointer-events:none;
+      font-size:22px;
     }
 
-    .cat-ear-left {
-      left: 30px;
+    .s1{top:80px;left:8%}
+    .s2{top:210px;right:9%;animation-delay:.7s}
+    .s3{top:620px;left:4%;animation-delay:1.2s}
+    .s4{top:980px;right:5%;animation-delay:.3s}
+
+    @keyframes twinkle{
+      from{opacity:.25;transform:scale(.75) rotate(0)}
+      to{opacity:1;transform:scale(1.25) rotate(15deg)}
     }
 
-    .cat-ear-right {
-      right: 30px;
+    /* ===== PAGE ===== */
+    .site{
+      width:min(1180px,94%);
+      margin:24px auto 40px;
+      border-radius:28px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      border:1px solid rgba(255,255,255,.8);
+      background:rgba(255,255,255,.62);
+      backdrop-filter:blur(10px);
     }
 
-    .search-inner {
-      display: flex;
-      align-items: center;
-      background: white;
-      border-radius: 28px;
-      padding: 8px 10px 8px 20px;
+    /* ===== HEADER ===== */
+    header{
+      min-height:135px;
+      padding:22px 30px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      background:
+        radial-gradient(circle at 82% 20%,rgba(255,255,255,.9) 0 2%,transparent 3%),
+        linear-gradient(135deg,#b8a4ff,#ffc0e2 62%,#f9d8ff);
+      position:relative;
+      overflow:hidden;
     }
 
-    #searchInput {
-      flex: 1;
-      border: none;
-      outline: none;
-      font-size: 17px;
-      padding: 14px;
-      background: transparent;
+    header::after{
+      content:"☁️ ☁️";
+      position:absolute;
+      right:20px;
+      bottom:-30px;
+      font-size:90px;
+      opacity:.45;
+      letter-spacing:30px;
     }
 
-    .cat-search-button {
-      width: 95px;
-      height: 55px;
-      border: none;
-      border-radius: 20px;
-      background: linear-gradient(135deg, #ff7eb5, #f04f91);
-      font-size: 28px;
-      cursor: pointer;
+    .brand{
+      position:relative;
+      z-index:2;
+      font-weight:900;
+      font-size:clamp(30px,5vw,58px);
+      color:white;
+      text-shadow:
+        0 3px 0 #ff61a9,
+        0 0 10px rgba(255,255,255,.8);
+      letter-spacing:-2px;
     }
 
-    #searchResults {
-      margin-top: 25px;
+    .brand .paw{color:#ff4f9d}
+
+    nav{
+      position:relative;
+      z-index:2;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
     }
 
-    .story-result {
-      background: white;
-      border: 1px solid #ffd2e4;
-      border-radius: 16px;
-      padding: 18px;
-      margin-bottom: 12px;
-      box-shadow: 0 4px 12px rgba(240,79,145,.08);
+    nav a{
+      background:rgba(255,255,255,.78);
+      border:2px solid #f7c5df;
+      padding:13px 18px;
+      border-radius:999px;
+      font-weight:800;
+      box-shadow:0 5px 14px rgba(120,70,140,.12);
+      transition:.2s ease;
     }
 
-    .story-title {
-      color: #e83580;
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 8px;
+    nav a:hover{
+      transform:translateY(-3px) scale(1.03);
+      background:white;
     }
 
-    .story-info {
-      color: #777;
-      font-size: 14px;
+    /* ===== HERO ===== */
+    .hero{
+      padding:38px;
+      display:grid;
+      grid-template-columns:360px 1fr;
+      gap:42px;
+      align-items:center;
+      background:
+        radial-gradient(circle at 15% 30%,#fff 0 1%,transparent 1.4%),
+        linear-gradient(135deg,#fff,#fff6fb);
+      position:relative;
     }
 
-    .watch-button {
-      display: inline-block;
-      margin-top: 12px;
-      text-decoration: none;
-      background: #f04f91;
-      color: white;
-      padding: 10px 16px;
-      border-radius: 14px;
+    .logo-orb{
+      width:320px;
+      aspect-ratio:1;
+      margin:auto;
+      border-radius:50%;
+      background:
+        radial-gradient(circle at 30% 22%,#fff 0 3%,transparent 3.5%),
+        radial-gradient(circle at 70% 18%,#ffe9a6 0 5%,transparent 5.5%),
+        linear-gradient(145deg,#ffd6ec,#cbd3ff 58%,#ffe4f1);
+      border:8px solid white;
+      outline:4px solid #ff9acb;
+      box-shadow:0 15px 30px rgba(220,100,170,.22);
+      display:grid;
+      place-items:center;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .logo-orb::before,
+    .logo-orb::after{
+      content:"☁️";
+      position:absolute;
+      font-size:72px;
+      opacity:.85;
+    }
+    .logo-orb::before{left:-14px;bottom:18px}
+    .logo-orb::after{right:-8px;top:8px}
+
+    .logo-text{
+      position:relative;
+      z-index:2;
+      font-size:48px;
+      line-height:.92;
+      font-weight:900;
+      color:#fff;
+      text-shadow:
+        0 3px 0 #ff5ca8,
+        0 0 10px #ff88bc;
+    }
+
+    .logo-text span{
+      display:block;
+      font-size:28px;
+      margin-top:10px;
+    }
+
+    .hero-copy{text-align:center}
+
+    .hero-copy h1{
+      margin:0;
+      font-family:Georgia,serif;
+      font-size:clamp(36px,5vw,64px);
+      line-height:1.06;
+    }
+
+    .hero-copy h1 strong{color:#ef4b91}
+
+    .search-label{
+      color:#ed4c93;
+      font-weight:800;
+      margin:20px 0 12px;
+      font-size:18px;
+    }
+
+    .cat-search{
+      position:relative;
+      display:flex;
+      align-items:center;
+      background:white;
+      border:5px solid #ff87bb;
+      border-radius:28px;
+      padding:6px 7px 6px 18px;
+      box-shadow:0 8px 20px rgba(239,75,145,.16);
+    }
+
+    .cat-search::before,
+    .cat-search::after{
+      content:"";
+      position:absolute;
+      top:-24px;
+      width:28px;
+      height:28px;
+      background:#ff87bb;
+      transform:rotate(45deg);
+      border-radius:6px 20px 6px 20px;
+      z-index:-1;
+    }
+
+    .cat-search::before{left:30px}
+    .cat-search::after{right:30px}
+
+    .cat-search input{
+      flex:1;
+      min-width:0;
+      border:0;
+      outline:0;
+      font-size:16px;
+      padding:14px 8px;
+      background:transparent;
+    }
+
+    .cat-search button{
+      border:0;
+      background:linear-gradient(135deg,#ff83ba,#ef4b91);
+      color:white;
+      width:66px;
+      height:52px;
+      border-radius:18px;
+      font-size:26px;
+      cursor:pointer;
+      transition:.18s;
+    }
+
+    .cat-search button:hover{
+      transform:scale(1.06) rotate(-4deg);
+    }
+
+    .hero-copy p{
+      margin:20px auto 0;
+      max-width:620px;
+      line-height:1.6;
+      font-weight:600;
+    }
+
+    #searchResults{
+      margin-top:15px;
+      text-align:left;
+    }
+
+    .result{
+      background:white;
+      border:1px solid #ffd0e5;
+      border-radius:14px;
+      padding:12px 14px;
+      margin:8px 0;
+      box-shadow:0 4px 12px rgba(230,90,150,.08);
+    }
+
+    .result a{
+      color:#e53d86;
+      font-weight:800;
+    }
+
+    /* ===== ABOUT ===== */
+    .section{
+      padding:24px;
+    }
+
+    .about{
+      margin:0 24px;
+      border-radius:28px;
+      padding:30px 36px;
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      align-items:center;
+      gap:30px;
+      background:
+        radial-gradient(circle at 82% 20%,rgba(255,255,255,.7) 0 8%,transparent 8.5%),
+        linear-gradient(135deg,#d8caff,#f4d7ff 58%,#cdd7ff);
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .about h2,
+    .genres h2,
+    .channels h2{
+      margin:0 0 18px;
+      font-size:30px;
+      color:#e64c90;
+    }
+
+    .about p{
+      line-height:1.75;
+      font-size:16px;
+    }
+
+    .about-art{
+      min-height:230px;
+      display:grid;
+      place-items:center;
+      font-size:80px;
+      position:relative;
+    }
+
+    .about-art .mini-logo{
+      background:rgba(255,255,255,.6);
+      border-radius:50%;
+      width:220px;
+      height:220px;
+      display:grid;
+      place-items:center;
+      box-shadow:0 12px 30px rgba(124,81,159,.15);
+    }
+
+    /* ===== LOWER GRID ===== */
+    .lower{
+      padding:24px;
+      display:grid;
+      grid-template-columns:.78fr 1.42fr;
+      gap:24px;
+    }
+
+    .genres,
+    .channels{
+      border-radius:28px;
+      background:rgba(255,255,255,.72);
+      border:2px solid #efb6dd;
+      padding:24px;
+      box-shadow:var(--shadow);
+    }
+
+    .genre-list{
+      display:grid;
+      gap:10px;
+      font-weight:700;
+    }
+
+    .genre-list div{
+      padding-bottom:9px;
+      border-bottom:1px dashed #d9b6e8;
+    }
+
+    .channel-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+
+    .channel{
+      padding:18px;
+      text-align:center;
+      border-radius:24px;
+      background:linear-gradient(180deg,#fff,#fff5fb);
+      border:2px solid #ffd1e5;
+      transition:.2s ease;
+    }
+
+    .channel:nth-child(2){
+      background:linear-gradient(180deg,#fffbea,#fff7f1);
+    }
+
+    .channel:nth-child(3){
+      background:linear-gradient(180deg,#f5fff0,#fff);
+    }
+
+    .channel:hover{
+      transform:translateY(-5px);
+      box-shadow:0 14px 24px rgba(220,90,150,.16);
+    }
+
+    .channel-logo{
+      width:150px;
+      aspect-ratio:1;
+      margin:0 auto 14px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(145deg,#ffd4ea,#cfd4ff);
+      border:4px solid white;
+      outline:2px solid #f8acd0;
+      font-size:52px;
+    }
+
+    .channel h3{
+      min-height:50px;
+      margin:0 0 14px;
+      font-size:18px;
+    }
+
+    .open-btn{
+      display:inline-block;
+      padding:12px 28px;
+      border-radius:999px;
+      background:linear-gradient(135deg,#a995f0,#8c78df);
+      color:white;
+      font-weight:900;
+      box-shadow:0 6px 15px rgba(110,83,180,.18);
+    }
+
+    .channel:nth-child(2) .open-btn{
+      background:linear-gradient(135deg,#ff80b5,#e94d8e);
+    }
+
+    /* ===== FOOTER ===== */
+    footer{
+      padding:34px 20px 26px;
+      text-align:center;
+      background:
+        radial-gradient(circle at 10% 80%,#fff 0 1%,transparent 1.5%),
+        linear-gradient(180deg,#ead8ff,#ffdceb);
+      position:relative;
+      overflow:hidden;
+    }
+
+    footer::before{
+      content:"☁️ ☁️ ☁️";
+      position:absolute;
+      left:0;
+      right:0;
+      top:-35px;
+      font-size:70px;
+      opacity:.65;
+      letter-spacing:45px;
+    }
+
+    .footer-links{
+      position:relative;
+      z-index:2;
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:22px;
+      margin:10px 0 18px;
+      font-weight:700;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width:900px){
+      header{
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      nav{justify-content:flex-start}
+
+      .hero{
+        grid-template-columns:1fr;
+      }
+
+      .logo-orb{width:min(300px,80vw)}
+
+      .about{
+        grid-template-columns:1fr;
+      }
+
+      .lower{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width:650px){
+      .site{width:100%;margin:0;border-radius:0}
+      header{padding:18px}
+      .brand{font-size:38px}
+      nav a{padding:10px 12px;font-size:13px}
+      .hero{padding:28px 18px}
+      .hero-copy h1{font-size:38px}
+      .about{margin:0 12px;padding:24px}
+      .lower{padding:12px}
+      .channel-grid{grid-template-columns:1fr}
+      .channel-logo{width:130px}
     }
   </style>
 </head>
 
 <body>
 
-  <div class="lazymeow-search">
+  <!-- MÂY CHUYỂN ĐỘNG -->
+  <div class="cloud c1">☁️</div>
+  <div class="cloud c2">☁️</div>
+  <div class="cloud c3">☁️</div>
+  <div class="cloud c4">☁️</div>
 
-    <div class="search-title">
-      💕 Tìm truyện yêu thích 💕
-    </div>
+  <!-- LẤP LÁNH -->
+  <div class="sparkle s1">✨</div>
+  <div class="sparkle s2">⭐</div>
+  <div class="sparkle s3">💗</div>
+  <div class="sparkle s4">✨</div>
 
-    <div class="cat-search-box">
+  <div class="site">
 
-      <div class="cat-ear cat-ear-left"></div>
-      <div class="cat-ear cat-ear-right"></div>
-
-      <div class="search-inner">
-
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="Nhập tên truyện, thể loại hoặc chương..."
-        >
-
-        <button
-          class="cat-search-button"
-          onclick="searchStory()"
-        >
-          🐾
-        </button>
-
+    <!-- ===== HEADER ===== -->
+    <header>
+      <div class="brand">
+        Lazy <span class="paw">🐾</span> Meow Audio
       </div>
 
-    </div>
+      <nav>
+        <a href="#genres">🐾 THỂ LOẠI</a>
+        <a href="#channels">▶️ KÊNH YOUTUBE</a>
+        <a href="LINK_TELEGRAM_CUA_BAN" target="_blank">✈️ TELEGRAM</a>
+      </nav>
+    </header>
 
-    <div id="searchResults"></div>
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+
+      <div class="logo-orb">
+        <!--
+          Bạn có thể thay toàn bộ phần logo-text bằng ảnh logo:
+          <img src="images/logo.png" style="width:100%;height:100%;object-fit:cover">
+        -->
+        <div class="logo-text">
+          LAZY<br>MEOW
+          <span>AUDIO 🐾</span>
+        </div>
+      </div>
+
+      <div class="hero-copy">
+        <h1>
+          Thả Lỏng Với<br>
+          <strong>LAZY MEOW AUDIO</strong>
+        </h1>
+
+        <div class="search-label">
+          💗 Tìm truyện yêu thích 💗
+        </div>
+
+        <div class="cat-search">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Nhập tên truyện, thể loại hoặc chương..."
+          >
+          <button onclick="searchStory()" aria-label="Tìm kiếm">🐾</button>
+        </div>
+
+        <div id="searchResults"></div>
+
+        <p>
+          Nghe truyện audio thư giãn, có mục tìm kiếm dễ dàng
+          và đa ngôn ngữ.
+        </p>
+      </div>
+
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section class="about" id="about">
+
+      <div>
+        <h2>🐾 Về Lazy Meow Audio</h2>
+
+        <p>
+          Lazy Meow Audio là kênh truyện âm thanh chuyên biệt,
+          mang đến những câu chuyện dịch từ nhiều thể loại khác nhau.
+          Mỗi truyện được dẫn dắt bởi những câu chuyện thú vị,
+          giúp bạn thư giãn sau một ngày dài.
+        </p>
+
+        <p>
+          Thư viện truyện được cập nhật liên tục với nhiều chủ đề:
+          mạt thế, xuyên không, trọng sinh, ngôn tình, kinh dị,
+          huyền huyễn, tu tiên, đô thị, hiện đại và nhiều thể loại khác.
+        </p>
+      </div>
+
+      <div class="about-art">
+        <div class="mini-logo">
+          🐈‍⬛ ☁️ 🐾
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===== GENRES + CHANNELS ===== -->
+    <section class="lower">
+
+      <div class="genres" id="genres">
+        <h2>🐾 Danh Mục Thể Loại Truyện</h2>
+
+        <div class="genre-list">
+          <div>🐾 Mạt Thế / Zombie / Sinh Tồn</div>
+          <div>🐾 Xuyên Không / Trọng Sinh</div>
+          <div>🐾 Ngôn Tình</div>
+          <div>🐾 Kinh Dị / Linh Dị</div>
+          <div>🐾 Huyền Huyễn / Tu Tiên / Thú Thế</div>
+          <div>🐾 Ngự Thú / Tiên Hiệp / Kiếm Hiệp / Võ Hiệp</div>
+          <div>🐾 Đô Thị / Hiện Đại / Cổ Đại</div>
+          <div>🐾 Hệ Thống / Dị Năng / Không Gian</div>
+          <div>🐾 Game / Vòng Lặp / Khoa Huyễn</div>
+          <div>🐾 Điền Văn / Làm Ruộng ...v.v</div>
+        </div>
+      </div>
+
+      <div class="channels" id="channels">
+        <h2 style="text-align:center">🐾 KÊNH YOUTUBE 🐾</h2>
+
+        <div class="channel-grid">
+
+          <div class="channel">
+            <div class="channel-logo">🐈‍⬛</div>
+            <h3>LAZY MEOW<br>AUDIO MY</h3>
+            <a class="open-btn"
+               href="LINK_YOUTUBE_MY"
+               target="_blank">
+              OPEN
+            </a>
+          </div>
+
+          <div class="channel">
+            <div class="channel-logo">🐈‍⬛</div>
+            <h3>LAZY MEOW<br>AUDIO IND</h3>
+            <a class="open-btn"
+               href="LINK_YOUTUBE_IND"
+               target="_blank">
+              OPEN
+            </a>
+          </div>
+
+          <div class="channel">
+            <div class="channel-logo">🐈‍⬛</div>
+            <h3>LAZY MEOW<br>AUDIO US</h3>
+            <a class="open-btn"
+               href="LINK_YOUTUBE_US"
+               target="_blank">
+              OPEN
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+      <div class="footer-links">
+        <a href="#about">🐾 Về Chúng Tôi</a>
+        <a href="#">🐾 Chính Sách Bảo Mật</a>
+        <a href="#">🐾 Điều Khoản Sử Dụng</a>
+        <a href="#">🐾 Liên Hệ</a>
+      </div>
+
+      <div>
+        © 2026 Lazy Meow Audio. All rights reserved. 🐾
+      </div>
+    </footer>
 
   </div>
 
 
   <script>
-
-    /* ============================
-       ĐIỀN TRUYỆN Ở ĐÂY
-    ============================ */
+    /* ==========================================
+       CHỖ THÊM TRUYỆN VÀ LINK CỦA BẠN
+       ========================================== */
 
     const stories = [
-
       {
-        title: "Rương Kiamat: Ta cùng mèo nhỏ tích trữ vật tư",
-        genre: "Mạt thế • Hệ thống • Tích trữ",
-        chapter: "Chapter 1 - 50",
-        url: "#"
+        title: "Ruang Kiamat: Aku dan Si Meow Comel Menimbun Bekalan",
+        genre: "Mạt thế • Tích trữ • Không gian",
+        chapter: "Chapter 1 - 16",
+        url: "LINK_VIDEO_1"
       },
 
       {
-        title: "Xuyên không làm pháo hôi, ta dựa mỹ thực đi lên đỉnh cao",
-        genre: "Xuyên không • Mỹ thực • Cổ đại",
-        chapter: "Chapter 1 - 70",
-        url: "#"
-      }
+        title: "Xuyên không làm pháo hôi",
+        genre: "Xuyên không • Cổ đại • Mỹ thực",
+        chapter: "Chapter 1 - 50",
+        url: "LINK_VIDEO_2"
+      },
 
+      {
+        title: "Sau khi trọng sinh, ta trở thành đại lão",
+        genre: "Trọng sinh • Hệ thống • Nữ cường",
+        chapter: "Chapter 1 - 99",
+        url: "LINK_VIDEO_3"
+      }
     ];
 
 
-    function searchStory() {
-
-      const keyword =
-        document.getElementById("searchInput")
-        .value
+    function normalizeText(text){
+      return text
         .toLowerCase()
-        .trim();
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g,"")
+        .replace(/đ/g,"d");
+    }
 
-      const box =
-        document.getElementById("searchResults");
 
-      if (!keyword) {
+    function searchStory(){
+      const input = document.getElementById("searchInput");
+      const box = document.getElementById("searchResults");
+
+      const keyword = normalizeText(input.value.trim());
+
+      if(!keyword){
         box.innerHTML =
-          "<p style='text-align:center;color:#f04f91;'>🐱 Hãy nhập tên truyện nhé!</p>";
+          '<div class="result">🐱 Hãy nhập tên truyện, thể loại hoặc chương nhé!</div>';
         return;
       }
 
-      const results = stories.filter(story =>
-        story.title.toLowerCase().includes(keyword) ||
-        story.genre.toLowerCase().includes(keyword) ||
-        story.chapter.toLowerCase().includes(keyword)
-      );
+      const results = stories.filter(story => {
+        const fullText =
+          story.title + " " +
+          story.genre + " " +
+          story.chapter;
 
-      if (results.length === 0) {
+        return normalizeText(fullText).includes(keyword);
+      });
+
+      if(results.length === 0){
         box.innerHTML =
-          "<p style='text-align:center;color:#f04f91;'>😿 Không tìm thấy truyện.</p>";
+          '<div class="result">😿 Không tìm thấy truyện phù hợp.</div>';
         return;
       }
 
       box.innerHTML = results.map(story => `
-
-        <div class="story-result">
-
-          <div class="story-title">
-            🐱 ${story.title}
-          </div>
-
-          <div class="story-info">
-            ${story.genre}<br><br>
-            📖 ${story.chapter}
-          </div>
-
-          <a
-            class="watch-button"
-            href="${story.url}"
-            target="_blank"
-          >
-            🐾 Xem ngay
+        <div class="result">
+          <a href="${story.url}" target="_blank">
+            🐾 ${story.title}
           </a>
-
+          <div style="margin-top:5px;font-size:13px;color:#777">
+            ${story.genre} • ${story.chapter}
+          </div>
         </div>
-
       `).join("");
-
     }
 
 
     document
       .getElementById("searchInput")
-      .addEventListener("keydown", function(event) {
-
-        if (event.key === "Enter") {
+      .addEventListener("keydown",function(event){
+        if(event.key === "Enter"){
           searchStory();
         }
-
       });
-
   </script>
 
 </body>
