@@ -39,6 +39,165 @@ a{color:inherit;text-decoration:none} img{max-width:100%}
 .footer{padding:34px 20px 25px;text-align:center;background:linear-gradient(180deg,#eadcff,#ffdceb)}.footer-links{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:22px;margin-bottom:16px}.footer-link{font-weight:800;transition:.18s ease}.footer-link:hover{color:var(--pink-strong);transform:translateY(-2px)}.copyright{color:#4d3a57;font-size:14px}
 @media(max-width:920px){.topbar{flex-direction:column;align-items:flex-start}.cloud-nav{justify-content:flex-start}.hero{grid-template-columns:1fr}.about-panel{grid-template-columns:1fr}.content-grid{grid-template-columns:1fr}}
 @media(max-width:650px){:root{--hero-image-size:min(290px,78vw);--channel-image-size:132px}.site-shell{width:100%;margin:0;border-radius:0}.topbar{padding:18px}.brand-link{max-width:300px}.cloud-button{min-width:128px;padding:12px 14px;font-size:13px}.hero{padding:28px 18px}.hero-title{font-size:38px}.about-panel{margin:0 12px;padding:24px}.content-grid{padding:12px}.channel-grid{grid-template-columns:1fr}}
+/* ===== YOUTUBE POPUP ===== */
+
+.youtube-menu{
+    position:relative;
+    display:inline-block;
+}
+
+/* Popup mặc định PHẢI ẨN */
+.youtube-popup{
+    display:none;
+
+    position:absolute;
+    top:calc(100% + 18px);
+    left:50%;
+    transform:translateX(-50%);
+
+    width:300px;
+    padding:14px;
+
+    background:#f1acd0;
+    border-radius:24px;
+
+    box-shadow:
+        0 16px 35px rgba(160,70,130,.25);
+
+    z-index:99999;
+}
+
+/* CHỈ khi có class show mới hiện */
+.youtube-popup.show{
+    display:block;
+}
+
+
+/* Tam giác nhỏ phía trên popup */
+.youtube-popup::before{
+    content:"";
+
+    position:absolute;
+    top:-10px;
+    left:50%;
+
+    width:20px;
+    height:20px;
+
+    background:#f1acd0;
+
+    transform:
+        translateX(-50%)
+        rotate(45deg);
+}
+
+
+/* Từng kênh */
+.youtube-item{
+    display:flex;
+    align-items:center;
+    gap:13px;
+
+    min-height:92px;
+
+    padding:9px 13px;
+    margin-bottom:10px;
+
+    border-radius:24px;
+
+    color:#111;
+}
+
+.youtube-item:last-child{
+    margin-bottom:0;
+}
+
+
+/* Malaysia */
+.youtube-item.malaysia{
+    background:#ffe4f1;
+}
+
+
+/* Indonesia */
+.youtube-item.indonesia{
+    background:#fff6c8;
+}
+
+
+/* English */
+.youtube-item.world{
+    background:#d9ffb9;
+}
+
+
+/* Ảnh tròn */
+.youtube-logo{
+    width:78px;
+    height:78px;
+    min-width:78px;
+
+    border-radius:50%;
+
+    overflow:hidden;
+
+    border:3px solid white;
+
+    background:white;
+}
+
+.youtube-logo img{
+    width:100%;
+    height:100%;
+
+    display:block;
+
+    object-fit:cover;
+}
+
+
+/* Tên */
+.youtube-name{
+    flex:1;
+
+    text-align:center;
+
+    line-height:1.05;
+}
+
+.youtube-name small{
+    display:block;
+
+    font-size:11px;
+
+    font-weight:800;
+
+    margin-bottom:5px;
+}
+
+.youtube-name strong{
+    display:block;
+
+    font-size:19px;
+
+    font-weight:900;
+}
+
+.youtube-name span{
+    display:block;
+
+    margin-top:4px;
+
+    font-size:12px;
+
+    font-weight:900;
+}
+
+
+/* Hover */
+.youtube-item:hover{
+    transform:scale(1.02);
+}
 </style>
 </head>
 <body>
