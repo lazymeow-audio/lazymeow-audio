@@ -50,10 +50,90 @@ a{color:inherit;text-decoration:none} img{max-width:100%}
     <img src="images/logo-tieude.png" alt="Lazy Meow Audio" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
   </a>
   <nav class="cloud-nav">
-    <a class="cloud-button" href="the-loai.html">🐾 THỂ LOẠI</a>
-    <a class="cloud-button" href="kenh-youtube.html">▶️ KÊNH YOUTUBE</a>
-    <a class="cloud-button" href="LINK_TELEGRAM" target="_blank">✈️ TELEGRAM</a>
-  </nav>
+
+    <!-- THỂ LOẠI -->
+    <a class="cloud-button" href="the-loai.html">
+        🐾 THỂ LOẠI
+    </a>
+
+
+    <!-- YOUTUBE -->
+    <div class="youtube-menu">
+
+        <button
+            class="cloud-button youtube-toggle"
+            type="button"
+            onclick="toggleYoutubePopup()"
+        >
+            ▶️ KÊNH YOUTUBE
+        </button>
+
+        <div class="youtube-popup" id="youtubePopup">
+
+            <a class="youtube-item malaysia"
+               href="LINK_YOUTUBE_MY"
+               target="_blank">
+
+                <div class="youtube-logo">
+                    <img src="images/ytb-my.png"
+                         alt="Lazy Meow Audio Malaysia">
+                </div>
+
+                <div class="youtube-name">
+                    <small>LAZY MEOW AUDIO</small>
+                    <strong>MALAYSIA</strong>
+                </div>
+
+            </a>
+
+
+            <a class="youtube-item indonesia"
+               href="LINK_YOUTUBE_IND"
+               target="_blank">
+
+                <div class="youtube-logo">
+                    <img src="images/ytb-ind.png"
+                         alt="Lazy Meow Audio Indonesia">
+                </div>
+
+                <div class="youtube-name">
+                    <small>LAZY MEOW AUDIO</small>
+                    <strong>INDONESIA</strong>
+                </div>
+
+            </a>
+
+
+            <a class="youtube-item world"
+               href="LINK_YOUTUBE_US"
+               target="_blank">
+
+                <div class="youtube-logo">
+                    <img src="images/ytb-us.png"
+                         alt="Lazy Meow Audio World English">
+                </div>
+
+                <div class="youtube-name">
+                    <small>LAZY MEOW AUDIO</small>
+                    <strong>WORLD</strong>
+                    <span>ENGLISH</span>
+                </div>
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- TELEGRAM -->
+    <a class="cloud-button"
+       href="LINK_TELEGRAM"
+       target="_blank">
+        ✈️ TELEGRAM
+    </a>
+
+</nav>
 </header>
 <section class="hero">
   <div class="hero-circle"><img src="images/logo-main.png" alt="Lazy Meow Audio"></div>
