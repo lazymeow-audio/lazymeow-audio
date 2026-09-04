@@ -199,6 +199,65 @@ a{color:inherit;text-decoration:none} img{max-width:100%}
     transform:scale(1.02);
 }
   
+
+/* ===== LANGUAGE POPUP ===== */
+.language-menu{
+    position:relative;
+    display:inline-block;
+    z-index:100000;
+}
+.language-popup{
+    display:none;
+    position:absolute;
+    top:calc(100% + 16px);
+    left:50%;
+    transform:translateX(-50%);
+    width:250px;
+    padding:12px;
+    background:#f6c7df;
+    border-radius:24px;
+    box-shadow:0 16px 35px rgba(160,70,130,.25);
+    z-index:999999;
+}
+.language-popup.show{display:block;}
+.language-popup::before{
+    content:"";
+    position:absolute;
+    top:-9px;
+    left:50%;
+    width:18px;
+    height:18px;
+    background:#f6c7df;
+    transform:translateX(-50%) rotate(45deg);
+}
+.language-popup button{
+    position:relative;
+    z-index:2;
+    width:100%;
+    min-height:64px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:8px;
+    padding:9px 12px;
+    border:0;
+    border-radius:18px;
+    background:white;
+    cursor:pointer;
+    text-align:left;
+    transition:.18s ease;
+}
+.language-popup button:nth-child(1){background:#ffe5f1;}
+.language-popup button:nth-child(2){background:#fff5cd;}
+.language-popup button:nth-child(3){background:#ffe9e3;}
+.language-popup button:nth-child(4){background:#e7efff;}
+.language-popup button:last-child{margin-bottom:0;}
+.language-popup button:hover{transform:scale(1.03);}
+.lang-flag{font-size:28px;width:42px;text-align:center;}
+.lang-text{display:flex;flex-direction:column;line-height:1.1;}
+.lang-text strong{font-size:15px;font-weight:900;color:#2c1f2e;}
+.lang-text small{margin-top:4px;font-size:11px;color:#7b6b79;}
+
 </style>
 </head>
 <body>
@@ -221,130 +280,28 @@ a{color:inherit;text-decoration:none} img{max-width:100%}
     >
         🌐 <span id="currentLang">VI</span> ▼
     </button>
-/* ===== LANGUAGE POPUP ===== */
 
-.language-menu{
-    position:relative;
-    display:inline-block;
-    z-index:100000;
-}
+    <div class="language-popup" id="languagePopup">
+        <button type="button" onclick="changeLanguage('vi')">
+            <span class="lang-flag">🇻🇳</span>
+            <span class="lang-text"><strong>Tiếng Việt</strong><small>Vietnamese</small></span>
+        </button>
+        <button type="button" onclick="changeLanguage('ms')">
+            <span class="lang-flag">🇲🇾</span>
+            <span class="lang-text"><strong>Bahasa Melayu</strong><small>Malay</small></span>
+        </button>
+        <button type="button" onclick="changeLanguage('id')">
+            <span class="lang-flag">🇮🇩</span>
+            <span class="lang-text"><strong>Bahasa Indonesia</strong><small>Indonesian</small></span>
+        </button>
+        <button type="button" onclick="changeLanguage('en')">
+            <span class="lang-flag">🇺🇸</span>
+            <span class="lang-text"><strong>English</strong><small>English</small></span>
+        </button>
+    </div>
 
-.language-popup{
-    display:none;
-    position:absolute;
-    top:calc(100% + 16px);
-    left:50%;
-    transform:translateX(-50%);
+</div>
 
-    width:250px;
-    padding:12px;
-
-    background:#f6c7df;
-    border-radius:24px;
-
-    box-shadow:
-        0 16px 35px rgba(160,70,130,.25);
-
-    z-index:999999;
-}
-
-.language-popup.show{
-    display:block;
-}
-
-/* tam giác nhỏ phía trên */
-.language-popup::before{
-    content:"";
-    position:absolute;
-    top:-9px;
-    left:50%;
-
-    width:18px;
-    height:18px;
-
-    background:#f6c7df;
-
-    transform:
-        translateX(-50%)
-        rotate(45deg);
-}
-
-/* từng dòng ngôn ngữ */
-.language-popup button{
-    position:relative;
-    z-index:2;
-
-    width:100%;
-    min-height:64px;
-
-    display:flex;
-    align-items:center;
-    gap:12px;
-
-    margin-bottom:8px;
-    padding:9px 12px;
-
-    border:0;
-    border-radius:18px;
-
-    background:white;
-
-    cursor:pointer;
-    text-align:left;
-
-    transition:.18s ease;
-}
-
-.language-popup button:nth-child(1){
-    background:#ffe5f1;
-}
-
-.language-popup button:nth-child(2){
-    background:#fff5cd;
-}
-
-.language-popup button:nth-child(3){
-    background:#ffe9e3;
-}
-
-.language-popup button:nth-child(4){
-    background:#e7efff;
-}
-
-.language-popup button:last-child{
-    margin-bottom:0;
-}
-
-.language-popup button:hover{
-    transform:scale(1.03);
-}
-
-/* cờ */
-.lang-flag{
-    font-size:28px;
-    width:42px;
-    text-align:center;
-}
-
-/* chữ */
-.lang-text{
-    display:flex;
-    flex-direction:column;
-    line-height:1.1;
-}
-
-.lang-text strong{
-    font-size:15px;
-    font-weight:900;
-    color:#2c1f2e;
-}
-
-.lang-text small{
-    margin-top:4px;
-    font-size:11px;
-    color:#7b6b79;
-}
-  
     <!-- THỂ LOẠI -->
     <a class="cloud-button" href="the-loai.html">
         🐾 <span data-i18n="navGenres">THỂ LOẠI</span>
@@ -857,6 +814,66 @@ const translations = {
 
 };
   
+
+/* ===== LANGUAGE SWITCHER ===== */
+let currentLanguage = localStorage.getItem("lazyMeowLanguage") || "vi";
+
+function setLanguage(lang){
+    if(!translations[lang]) lang = "vi";
+    currentLanguage = lang;
+    localStorage.setItem("lazyMeowLanguage", lang);
+
+    document.querySelectorAll("[data-i18n]").forEach(function(element){
+        const key = element.getAttribute("data-i18n");
+        if(translations[lang][key]){
+            element.textContent = translations[lang][key];
+        }
+    });
+
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(function(element){
+        const key = element.getAttribute("data-i18n-placeholder");
+        if(translations[lang][key]){
+            element.placeholder = translations[lang][key];
+        }
+    });
+
+    const names = {vi:"VI", ms:"MY", id:"ID", en:"EN"};
+    const currentLangEl = document.getElementById("currentLang");
+    if(currentLangEl) currentLangEl.textContent = names[lang];
+
+    document.documentElement.lang = lang;
+}
+
+function changeLanguage(lang){
+    setLanguage(lang);
+    const popup = document.getElementById("languagePopup");
+    if(popup) popup.classList.remove("show");
+}
+
+function toggleLanguageMenu(event){
+    event.stopPropagation();
+    const popup = document.getElementById("languagePopup");
+    if(popup) popup.classList.toggle("show");
+
+    const youtubePopup = document.getElementById("youtubePopup");
+    if(youtubePopup) youtubePopup.classList.remove("show");
+}
+
+document.addEventListener("click", function(){
+    const popup = document.getElementById("languagePopup");
+    if(popup) popup.classList.remove("show");
+});
+
+document.addEventListener("DOMContentLoaded", function(){
+    const popup = document.getElementById("languagePopup");
+    if(popup){
+        popup.addEventListener("click", function(event){
+            event.stopPropagation();
+        });
+    }
+    setLanguage(currentLanguage);
+});
+
 </script>
   
 </body>
