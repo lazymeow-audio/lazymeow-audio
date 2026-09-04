@@ -377,5 +377,61 @@ function searchStory(){
 }
 document.getElementById("searchInput").addEventListener("keydown",e=>{if(e.key==="Enter")searchStory()});
 </script>
+  <script>
+function toggleYoutubePopup(event) {
+    event.stopPropagation();
+
+    const popup = document.getElementById("youtubePopup");
+    popup.classList.toggle("show");
+}
+
+/* Bấm ra ngoài → đóng popup */
+document.addEventListener("click", function () {
+    const popup = document.getElementById("youtubePopup");
+
+    if (popup) {
+        popup.classList.remove("show");
+    }
+});
+
+/* Bấm bên trong popup → không tự đóng */
+document.addEventListener("DOMContentLoaded", function () {
+    const popup = document.getElementById("youtubePopup");
+
+    if (popup) {
+        popup.addEventListener("click", function (event) {
+            event.stopPropagation();
+        });
+    }
+});
+</script>
+  <script>
+function toggleYoutubePopup(event) {
+    event.stopPropagation();
+
+    const popup = document.getElementById("youtubePopup");
+    popup.classList.toggle("show");
+}
+
+/* Bấm ra ngoài → đóng popup */
+document.addEventListener("click", function () {
+    const popup = document.getElementById("youtubePopup");
+
+    if (popup) {
+        popup.classList.remove("show");
+    }
+});
+
+/* Bấm bên trong popup → không tự đóng */
+document.addEventListener("DOMContentLoaded", function () {
+    const popup = document.getElementById("youtubePopup");
+
+    if (popup) {
+        popup.addEventListener("click", function (event) {
+            event.stopPropagation();
+        });
+    }
+});
+</script>
 </body>
 </html>
