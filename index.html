@@ -347,6 +347,102 @@ white-space:nowrap;
     min-width:205px;
     width:205px;
 }
+  /* ===== SEARCH AUTOCOMPLETE ===== */
+
+.cat-search{
+    position:relative;
+}
+
+#searchResults{
+    position:absolute;
+
+    top:calc(100% + 10px);
+    left:0;
+    right:0;
+
+    z-index:999999;
+
+    display:none;
+
+    max-height:360px;
+    overflow-y:auto;
+
+    padding:10px;
+
+    background:rgba(255,255,255,.98);
+
+    border:2px solid #ff9ac7;
+    border-radius:22px;
+
+    box-shadow:
+        0 16px 35px rgba(190,70,135,.18);
+
+    text-align:left;
+}
+
+#searchResults.show{
+    display:block;
+}
+
+.search-suggestion{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:14px;
+
+    padding:13px 14px;
+    margin-bottom:7px;
+
+    border-radius:16px;
+
+    background:#fff7fb;
+
+    cursor:pointer;
+
+    transition:.15s ease;
+}
+
+.search-suggestion:last-child{
+    margin-bottom:0;
+}
+
+.search-suggestion:hover{
+    background:#ffe6f2;
+    transform:translateX(3px);
+}
+
+.suggestion-main{
+    flex:1;
+    min-width:0;
+}
+
+.suggestion-title{
+    font-size:15px;
+    font-weight:900;
+    color:#332436;
+}
+
+.suggestion-meta{
+    margin-top:5px;
+    font-size:12px;
+    color:#7b6b79;
+}
+
+.country-badge{
+    flex-shrink:0;
+
+    padding:6px 9px;
+
+    border-radius:999px;
+
+    background:#f4e8ff;
+
+    font-size:11px;
+    font-weight:900;
+
+    color:#5c4770;
+}
 </style>
 </head>
 <body>
@@ -541,19 +637,219 @@ white-space:nowrap;
 </main>
 <script>
 const stories=[
-  {title:"Ruang Kiamat: Aku dan Si Meow Comel Menimbun Bekalan",genre:"Mạt thế • Tích trữ • Không gian",language:"Malay",chapter:"Chapter 1 - 16",youtube:"LINK_YOUTUBE_VIDEO_1",telegram:"LINK_TELEGRAM_TRUYEN_1"},
-  {title:"Xuyên không làm pháo hôi",genre:"Xuyên không • Cổ đại • Mỹ thực",language:"Tiếng Việt",chapter:"Chapter 1 - 50",youtube:"LINK_YOUTUBE_VIDEO_2",telegram:"LINK_TELEGRAM_TRUYEN_2"},
-  {title:"Sau khi trọng sinh, ta trở thành đại lão",genre:"Trọng sinh • Hệ thống • Nữ cường",language:"Tiếng Việt",chapter:"Chapter 1 - 99",youtube:"LINK_YOUTUBE_VIDEO_3",telegram:"LINK_TELEGRAM_TRUYEN_3"}
+ const stories = [
+
+    {
+        title:"Ruang Kiamat: Aku dan Si Meow Comel Menimbun Bekalan",
+
+        keywords:[
+            "ruang kiamat",
+            "kiamat",
+            "meow comel",
+            "menimbun bekalan",
+            "zombi",
+            "survival",
+            "apocalypse",
+            "stockpile",
+            "mạt thế",
+            "sinh tồn",
+            "tích trữ",
+            "không gian"
+        ],
+
+        genre:"Kiamat • Survival • Ruang",
+
+        language:"Bahasa Melayu",
+
+        country:"MY",
+
+        flag:"🇲🇾",
+
+        chapter:"Chapter 1 - 16",
+
+        youtube:"LINK_YOUTUBE_VIDEO_1",
+
+        telegram:"LINK_TELEGRAM_TRUYEN_1"
+    },
+
+
+    {
+        title:"Xuyên không làm pháo hôi",
+
+        keywords:[
+            "xuyên không",
+            "pháo hôi",
+            "cổ đại",
+            "mỹ thực",
+            "transmigration",
+            "ancient",
+            "food"
+        ],
+
+        genre:"Xuyên không • Cổ đại • Mỹ thực",
+
+        language:"Tiếng Việt",
+
+        country:"VN",
+
+        flag:"🇻🇳",
+
+        chapter:"Chapter 1 - 50",
+
+        youtube:"LINK_YOUTUBE_VIDEO_2",
+
+        telegram:"LINK_TELEGRAM_TRUYEN_2"
+    },
+
+
+    {
+        title:"Sau khi trọng sinh, ta trở thành đại lão",
+
+        keywords:[
+            "trọng sinh",
+            "đại lão",
+            "hệ thống",
+            "nữ cường",
+            "rebirth",
+            "system",
+            "strong female lead"
+        ],
+
+        genre:"Trọng sinh • Hệ thống • Nữ cường",
+
+        language:"Tiếng Việt",
+
+        country:"VN",
+
+        flag:"🇻🇳",
+
+        chapter:"Chapter 1 - 99",
+
+        youtube:"LINK_YOUTUBE_VIDEO_3",
+
+        telegram:"LINK_TELEGRAM_TRUYEN_3"
+    }
+
+];
 ];
 function normalizeText(text){return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d")}
 function searchStory(){
-  const input=document.getElementById("searchInput"),box=document.getElementById("searchResults"),keyword=normalizeText(input.value.trim());
-  if(!keyword){box.innerHTML ='<div class="search-result">' +translations[currentLanguage].searchEmpty +'</div>';return;}
-  const results=stories.filter(story=>normalizeText(story.title+" "+story.genre+" "+story.language+" "+story.chapter).includes(keyword));
-  if(results.length===0){box.innerHTML ='<div class="search-result">' +translations[currentLanguage].searchNone +'</div>';return;}
-  box.innerHTML=results.map(story=>`<div class="search-result"><div class="search-result-title">🐾 ${story.title}</div><div class="search-result-meta">${story.genre}<br>🌐 ${story.language} &nbsp; • &nbsp; 📖 ${story.chapter}</div><div class="result-links"><a class="mini-link" href="${story.youtube}" target="_blank">▶️ YouTube</a><a class="mini-link" href="${story.telegram}" target="_blank">✈️ Telegram</a></div></div>`).join("");
+
+    const input =
+        document.getElementById("searchInput");
+
+    const box =
+        document.getElementById("searchResults");
+
+    const keyword =
+        normalizeText(input.value.trim());
+
+
+    if(!keyword){
+
+        box.innerHTML = "";
+
+        box.classList.remove("show");
+
+        return;
+    }
+
+
+    const results = stories.filter(function(story){
+
+        const searchText = [
+            story.title,
+            story.genre,
+            story.language,
+            story.country,
+            ...(story.keywords || [])
+        ].join(" ");
+
+        return normalizeText(searchText)
+            .includes(keyword);
+
+    });
+
+
+    if(results.length === 0){
+
+        box.innerHTML = `
+            <div class="search-suggestion">
+
+                <div class="suggestion-main">
+
+                    <div class="suggestion-title">
+                        ${translations[currentLanguage].searchNone}
+                    </div>
+
+                </div>
+
+            </div>
+        `;
+
+        box.classList.add("show");
+
+        return;
+    }
+
+
+    box.innerHTML = results
+        .slice(0,8)
+        .map(function(story){
+
+            return `
+                <div
+                    class="search-suggestion"
+                    onclick="openStory('${story.youtube}')"
+                >
+
+                    <div class="suggestion-main">
+
+                        <div class="suggestion-title">
+                            ${story.title}
+                        </div>
+
+                        <div class="suggestion-meta">
+                            ${story.genre}
+                            •
+                            ${story.language}
+                        </div>
+
+                    </div>
+
+                    <div class="country-badge">
+                        ${story.flag}
+                        ${story.country}
+                    </div>
+
+                </div>
+            `;
+
+        })
+        .join("");
+
+    box.classList.add("show");
 }
-document.getElementById("searchInput").addEventListener("keydown",e=>{if(e.key==="Enter")searchStory()});  
+  function openStory(url){
+
+    if(!url){
+        return;
+    }
+
+    window.open(
+        url,
+        "_blank",
+        "noopener"
+    );
+}
+document.getElementById("searchInput").addEventListener("keydown",e=>{if(e.key==="Enter")searchStory()});
+  document
+    .getElementById("searchInput")
+    .addEventListener("input", function(){
+
+        searchStory();
+
+    });
 function toggleYoutubePopup(event) {
     event.stopPropagation();
 
