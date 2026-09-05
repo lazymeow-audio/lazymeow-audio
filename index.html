@@ -601,6 +601,12 @@ white-space:nowrap;
 </style>
 </head>
 <body>
+  <button id="watchAdBtn">
+    🎁 Xem quảng cáo / Watch Ad
+</button>
+  <button id="watchPopupBtn">
+    🎁 Xem quảng cáo Popup / Watch Popup Ad
+</button>
 <div class="floating-cloud cloud-a">☁️</div><div class="floating-cloud cloud-b">☁️</div><div class="floating-cloud cloud-c">☁️</div>
 <div class="floating-sparkle sparkle-a">✨</div><div class="floating-sparkle sparkle-b">⭐</div><div class="floating-sparkle sparkle-c">💗</div><div class="floating-sparkle sparkle-d">✨</div>
 <main class="site-shell">
@@ -1428,6 +1434,44 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 
 </script>
-  
+  <script>
+document.getElementById('watchPopupBtn').addEventListener('click', function () {
+
+    show_11731607('pop')
+        .then(() => {
+            alert('🎉 Hoàn thành quảng cáo! / Ad completed!');
+        })
+        .catch(e => {
+            console.log('Rewarded Popup error:', e);
+        });
+
+});
+</script>
+<script>
+document.getElementById('watchPopupBtn').addEventListener('click', function () {
+
+    show_11731607('pop')
+        .then(() => {
+            alert('🎉 Hoàn thành quảng cáo! / Ad completed!');
+        })
+        .catch(e => {
+            console.log('Rewarded Popup error:', e);
+        });
+
+});
+</script>
+  <script>
+show_11731607({
+    type: 'inApp',
+    inAppSettings: {
+        frequency: 2,
+        capping: 0.1,
+        interval: 30,
+        timeout: 5,
+        everyPage: false
+    }
+});
+</script>
+
 </body>
 </html>
