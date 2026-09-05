@@ -258,6 +258,83 @@ a{color:inherit;text-decoration:none} img{max-width:100%}
 .lang-text strong{font-size:15px;font-weight:900;color:#2c1f2e;}
 .lang-text small{margin-top:4px;font-size:11px;color:#7b6b79;}
 
+  /* =====================================
+   NÚT MÂY HEADER
+===================================== */
+
+.cloud-button{
+    position:relative;
+
+    min-width:185px;
+    height:82px;
+
+    padding:0 30px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+
+    background-color:transparent;
+    background-image:url("button-cloud.png");
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size:100% 100%;
+
+    border:none;
+    border-radius:0;
+    box-shadow:none;
+
+    color:#261b2d;
+    font-weight:900;
+
+    cursor:pointer;
+
+    transition:
+        transform .18s ease,
+        filter .18s ease;
+}
+
+
+/* TẮT MÂY TRẮNG CŨ */
+
+.cloud-button::before,
+.cloud-button::after{
+    display:none !important;
+}
+
+
+/* HIỆU ỨNG KHI ĐƯA CHUỘT VÀO */
+
+.cloud-button:hover{
+    background-color:transparent;
+    background-image:url("button-cloud.png");
+
+    transform:
+        translateY(-3px)
+        scale(1.04);
+
+    filter:
+        drop-shadow(
+            0 8px 10px rgba(210,100,170,.20)
+        );
+}
+
+
+/* NÚT NGÔN NGỮ */
+
+.language-toggle{
+    min-width:145px;
+    width:145px;
+}
+
+
+/* NÚT YOUTUBE */
+
+.youtube-toggle{
+    min-width:205px;
+    width:205px;
+}
 </style>
 </head>
 <body>
